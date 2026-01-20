@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>seonghak - Profile</title>
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Google+Sans:wght@300;400;500;700&family=Product+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@300;400;500;700&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/gh/niceplugin/font-kakaobig/css/all.min.css" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Google Sans', 'KakaoBig', 'Noto Sans KR', sans-serif;
+            background: linear-gradient(135deg, #1a1a1a 0%, #2d2d2d 50%, #1f1f1f 100%);
+            min-height: 100vh;
+            color: #e4e4e4;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        .profile-header {
+            text-align: center;
+            margin-bottom: 50px;
+        }
+
+        .avatar {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            border: 4px solid #e94560;
+            box-shadow: 0 0 30px rgba(233, 69, 96, 0.4);
+            margin-bottom: 20px;
+            transition: transform 0.3s ease;
+        }
+
+        .avatar:hover {
+            transform: scale(1.05);
+        }
+
+        .name {
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            background: linear-gradient(90deg, #e94560, #0f3460);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .typing-text {
+            font-size: 1.2rem;
+            color: #a4a4a4;
+            margin-bottom: 20px;
+            min-height: 30px;
+        }
+
+        .typing-text span {
+            border-right: 2px solid #e94560;
+            padding-right: 5px;
+            animation: blink 0.7s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { border-color: #e94560; }
+            50% { border-color: transparent; }
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 20px;
+        }
+
+        .social-links a {
+            color: #e4e4e4;
+            font-size: 1.5rem;
+            transition: color 0.3s ease, transform 0.3s ease;
+        }
+
+        .social-links a:hover {
+            color: #e94560;
+            transform: translateY(-3px);
+        }
+
+        .section {
+            background: rgba(255, 255, 255, 0.05);
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .section-title {
+            font-size: 1.5rem;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: #e94560;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .section-title i {
+            font-size: 1.2rem;
+        }
+
+        .about-text {
+            color: #c4c4c4;
+            font-size: 1rem;
+        }
+
+        .skills-container {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .skill-badge {
+            padding: 8px 16px;
+            border-radius: 20px;
+            background: rgba(233, 69, 96, 0.2);
+            border: 1px solid rgba(233, 69, 96, 0.4);
+            font-size: 0.9rem;
+            transition: all 0.3s ease;
+        }
+
+        .skill-badge:hover {
+            background: rgba(233, 69, 96, 0.4);
+            transform: translateY(-2px);
+        }
+
+        .stats-container {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+            gap: 20px;
+        }
+
+        .stats-container img {
+            border-radius: 10px;
+            max-width: 100%;
+        }
+
+        .contact-list {
+            list-style: none;
+        }
+
+        .contact-list li {
+            padding: 10px 0;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .contact-list li:last-child {
+            border-bottom: none;
+        }
+
+        .contact-list i {
+            color: #e94560;
+            width: 20px;
+        }
+
+        .contact-list a {
+            color: #e4e4e4;
+            text-decoration: none;
+            transition: color 0.3s ease;
+        }
+
+        .contact-list a:hover {
+            color: #e94560;
+        }
+
+        footer {
+            text-align: center;
+            padding: 20px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+
+        @media (max-width: 600px) {
+            .name {
+                font-size: 1.8rem;
+            }
+
+            .avatar {
+                width: 140px;
+                height: 140px;
+            }
+
+            .section {
+                padding: 20px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header class="profile-header">
+            <img src="https://avatars.githubusercontent.com/u/229243231?v=4" alt="Profile Avatar" class="avatar">
+            <h1 class="name">seonghak</h1>
+            <div class="typing-text">
+                <span id="typed-text"></span>
+            </div>
+            <div class="social-links">
+                <a href="https://github.com/mz-seonghak" target="_blank" title="GitHub">
+                    <i class="fab fa-github"></i>
+                </a>
+            </div>
+        </header>
+
+        <section class="section">
+            <h2 class="section-title"><i class="fas fa-user"></i> About Me</h2>
+            <p class="about-text">
+                Cloud Solution Architect seonghak입니다.<br>
+                AI, 기계학습, 데이터사이언스, 데이터분석, 분산컴퓨팅 등과 관련된 Google Cloud 기반의 솔루션 일을 하고 있습니다.
+            </p>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title"><i class="fas fa-code"></i> Tech Stack</h2>
+            <div class="skills-container">
+                <span class="skill-badge">JavaScript</span>
+                <span class="skill-badge">TypeScript</span>
+                <span class="skill-badge">Python</span>
+                <span class="skill-badge">Java</span>
+                <span class="skill-badge">React</span>
+                <span class="skill-badge">Node.js</span>
+                <span class="skill-badge">AWS</span>
+                <span class="skill-badge">Docker</span>
+                <span class="skill-badge">Git</span>
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title"><i class="fas fa-chart-line"></i> GitHub Stats</h2>
+            <div class="stats-container">
+                <img src="https://github-readme-stats.vercel.app/api?username=mz-seonghak&show_icons=true&theme=radical&hide_border=true&bg_color=0d1117" alt="GitHub Stats">
+                <img src="https://github-readme-streak-stats.herokuapp.com/?user=mz-seonghak&theme=radical&hide_border=true&background=0d1117" alt="GitHub Streak">
+            </div>
+        </section>
+
+        <section class="section">
+            <h2 class="section-title"><i class="fas fa-address-card"></i> Contact</h2>
+            <ul class="contact-list">
+                <li>
+                    <i class="fab fa-github"></i>
+                    <a href="https://github.com/mz-seonghak" target="_blank">github.com/mz-seonghak</a>
+                </li>
+            </ul>
+        </section>
+
+        <footer>
+            <p>&copy; 2026 seonghak. All rights reserved.</p>
+        </footer>
+    </div>
+
+    <script>
+        const texts = [
+            "AI/ML Engineer",
+            "Data Engineer",
+            "Software Engineer",
+            "Data Scientist",
+            "Cloud Architect"
+        ];
+        let textIndex = 0;
+        let charIndex = 0;
+        let isDeleting = false;
+        const typedText = document.getElementById('typed-text');
+
+        function type() {
+            const currentText = texts[textIndex];
+
+            if (isDeleting) {
+                typedText.textContent = currentText.substring(0, charIndex - 1);
+                charIndex--;
+            } else {
+                typedText.textContent = currentText.substring(0, charIndex + 1);
+                charIndex++;
+            }
+
+            let typeSpeed = isDeleting ? 50 : 100;
+
+            if (!isDeleting && charIndex === currentText.length) {
+                typeSpeed = 2000;
+                isDeleting = true;
+            } else if (isDeleting && charIndex === 0) {
+                isDeleting = false;
+                textIndex = (textIndex + 1) % texts.length;
+                typeSpeed = 500;
+            }
+
+            setTimeout(type, typeSpeed);
+        }
+
+        type();
+    </script>
+</body>
+</html>
