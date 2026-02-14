@@ -1,0 +1,46 @@
+---
+layout: default
+title: Slides - seonghak
+---
+
+<nav class="nav-bar">
+    <a href="{{ '/' | relative_url }}"><i class="fas fa-home"></i> Home</a>
+    <a href="{{ '/blog/' | relative_url }}"><i class="fas fa-pen-fancy"></i> Blog</a>
+    <a href="{{ '/slides/' | relative_url }}" class="active"><i class="fas fa-presentation-screen"></i> Slides</a>
+</nav>
+
+<section class="section">
+    <h2 class="section-title"><i class="fas fa-presentation-screen"></i> Slides</h2>
+
+    {% assign sorted_slides = site.slides | sort: "date" | reverse %}
+    {% if sorted_slides.size > 0 %}
+    <ul class="post-list">
+        {% for slide in sorted_slides %}
+        <li class="post-item">
+            <h3 class="post-item-title">
+                <a href="{{ slide.url | relative_url }}">
+                    <i class="fas fa-play-circle slide-icon"></i> {{ slide.title }}
+                </a>
+            </h3>
+            <div class="post-item-meta">
+                <span><i class="fas fa-calendar-alt"></i> {{ slide.date | date: "%Y년 %m월 %d일" }}</span>
+                {% if slide.tags.size > 0 %}
+                <span>
+                    <i class="fas fa-tags"></i>
+                    {{ slide.tags | join: ", " }}
+                </span>
+                {% endif %}
+            </div>
+            {% if slide.description %}
+            <p class="post-item-excerpt">{{ slide.description }}</p>
+            {% endif %}
+        </li>
+        {% endfor %}
+    </ul>
+    {% else %}
+    <div class="empty-state">
+        <i class="fas fa-presentation-screen"></i>
+        <p>아직 등록된 슬라이드가 없습니다.</p>
+    </div>
+    {% endif %}
+</section>

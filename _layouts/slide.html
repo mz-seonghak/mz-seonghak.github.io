@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page.title }} - {{ site.title }}</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/reveal.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/theme/{{ page.theme | default: 'white' }}.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/plugin/highlight/monokai.min.css">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .reveal .slides section {
+            text-align: left;
+        }
+        .reveal .slides section h1,
+        .reveal .slides section h2,
+        .reveal .slides section h3 {
+            text-align: left;
+        }
+        .slide-home-link {
+            position: fixed;
+            bottom: 16px;
+            left: 16px;
+            z-index: 100;
+            color: #5f6368;
+            font-size: 0.85rem;
+            text-decoration: none;
+            opacity: 0.5;
+            transition: opacity 0.3s ease;
+        }
+        .slide-home-link:hover {
+            opacity: 1;
+            color: #4285F4;
+        }
+    </style>
+</head>
+<body>
+    <div class="reveal">
+        <div class="slides">
+            {% assign raw_slides = content | split: '<hr />' %}
+            {% for slide in raw_slides %}
+                {% assign trimmed = slide | strip %}
+                {% if trimmed.size > 0 %}
+                <section>{{ slide }}</section>
+                {% endif %}
+            {% endfor %}
+        </div>
+    </div>
+
+    <a href="{{ '/slides/' | relative_url }}" class="slide-home-link">
+        <i class="fas fa-arrow-left"></i> 목록으로
+    </a>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/reveal.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/plugin/highlight/highlight.min.js"></script>
+    <script>
+        Reveal.initialize({
+            hash: true,
+            slideNumber: true,
+            transition: 'slide',
+            center: false,
+            plugins: [ RevealHighlight ]
+        });
+    </script>
+</body>
+</html>

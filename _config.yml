@@ -1,0 +1,46 @@
+# Site settings
+title: seonghak
+description: "Cloud Solution Architect - AI, ML, Data Engineering"
+url: "https://seonghak.com"
+baseurl: ""
+
+# Build settings
+markdown: kramdown
+highlighter: rouge
+
+# Permalink
+permalink: /blog/:year/:month/:day/:title/
+
+# Collections
+collections:
+  slides:
+    output: true
+    permalink: /slides/:path/
+
+# Defaults
+defaults:
+  - scope:
+      path: ""
+      type: "posts"
+    values:
+      layout: "post"
+  - scope:
+      path: ""
+      type: "slides"
+    values:
+      layout: "slide"
+
+# Exclude from build
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - README.md
+  - CLAUDE.md
+  - AGENT.md
+  - __worklog__
+  - __config__
+  - .cursor
+  - .cursorrules
+  - .claude
+  - .vscode
+  - "*.plan.md"
