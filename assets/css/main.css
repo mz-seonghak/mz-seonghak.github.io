@@ -338,7 +338,7 @@ footer {
 .post-header {
     margin-bottom: 30px;
     padding-bottom: 20px;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 3px solid var(--google-blue);
 }
 
 .post-title {
