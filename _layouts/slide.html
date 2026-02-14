@@ -38,20 +38,47 @@
             border-radius: 16px;
             box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
             border: 1px solid var(--border-color);
-            padding: 40px 50px;
+            padding: 36px 50px 40px;
             text-align: left;
             font-family: 'Google Sans', 'Noto Sans KR', sans-serif;
             color: var(--text-primary);
             line-height: 1.6;
             box-sizing: border-box;
             overflow: hidden;
+            height: auto !important;
+        }
+
+        /* ============================================================
+           Google Color Dots
+           ============================================================ */
+        .reveal .slides section .google-dots {
+            display: flex;
+            gap: 6px;
+            margin-bottom: 20px;
+        }
+
+        .reveal .slides section .google-dots span {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            display: inline-block;
+        }
+
+        .reveal .slides section .google-dots .blue { background: var(--google-blue); }
+        .reveal .slides section .google-dots .red { background: var(--google-red); }
+        .reveal .slides section .google-dots .yellow { background: var(--google-yellow); }
+        .reveal .slides section .google-dots .green { background: var(--google-green); }
+
+        /* title slide: dots centered */
+        .reveal .slides section:first-child .google-dots {
+            justify-content: center;
         }
 
         /* ============================================================
            Headings
            ============================================================ */
         .reveal .slides section h1 {
-            font-size: 1.8em;
+            font-size: 2.1em;
             font-weight: 700;
             margin-bottom: 0.4em;
             text-align: left;
@@ -62,7 +89,7 @@
         }
 
         .reveal .slides section h2 {
-            font-size: 1.35em;
+            font-size: 1.5em;
             font-weight: 600;
             color: var(--google-blue);
             margin-bottom: 0.5em;
@@ -72,7 +99,7 @@
         }
 
         .reveal .slides section h3 {
-            font-size: 1.05em;
+            font-size: 1.15em;
             font-weight: 600;
             color: var(--text-primary);
             margin-bottom: 0.4em;
@@ -83,13 +110,13 @@
            Text
            ============================================================ */
         .reveal .slides section p {
-            font-size: 0.75em;
+            font-size: 0.85em;
             color: var(--text-secondary);
             margin-bottom: 0.6em;
         }
 
         .reveal .slides section li {
-            font-size: 0.72em;
+            font-size: 0.82em;
             color: var(--text-primary);
             margin-bottom: 0.3em;
             line-height: 1.5;
@@ -133,7 +160,7 @@
         .reveal .slides section blockquote p {
             font-style: normal;
             color: var(--text-secondary);
-            font-size: 0.72em;
+            font-size: 0.82em;
         }
 
         /* ============================================================
@@ -143,7 +170,7 @@
             width: 100%;
             border-collapse: collapse;
             margin: 0.6em 0;
-            font-size: 0.6em;
+            font-size: 0.68em;
         }
 
         .reveal .slides section table th,
@@ -182,7 +209,7 @@
             margin: 0.6em 0;
             width: 100%;
             box-sizing: border-box;
-            font-size: 0.55em;
+            font-size: 0.6em;
         }
 
         .reveal .slides section pre code {
@@ -245,24 +272,32 @@
 
         .reveal .slides section:first-child h1 {
             text-align: center;
-            font-size: 2em;
+            font-size: 2.3em;
         }
 
         .reveal .slides section:first-child p {
             text-align: center;
-            font-size: 0.85em;
+            font-size: 0.95em;
             color: var(--text-secondary);
         }
 
         /* ============================================================
            Last slide special styling
            ============================================================ */
+        .reveal .slides section:last-child {
+            text-align: center;
+        }
+
         .reveal .slides section:last-child h1 {
             text-align: center;
         }
 
         .reveal .slides section:last-child p {
             text-align: center;
+        }
+
+        .reveal .slides section:last-child .google-dots {
+            justify-content: center;
         }
     </style>
 </head>
@@ -273,7 +308,15 @@
             {% for slide in raw_slides %}
                 {% assign trimmed = slide | strip %}
                 {% if trimmed.size > 0 %}
-                <section>{{ slide }}</section>
+                <section>
+                    <div class="google-dots">
+                        <span class="blue"></span>
+                        <span class="red"></span>
+                        <span class="yellow"></span>
+                        <span class="green"></span>
+                    </div>
+                    {{ slide }}
+                </section>
                 {% endif %}
             {% endfor %}
         </div>
