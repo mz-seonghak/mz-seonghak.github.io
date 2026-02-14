@@ -25,8 +25,20 @@ title: seonghak - Profile
 <section class="section">
     <h2 class="section-title"><i class="fas fa-user"></i> About Me</h2>
     <p class="about-text">
-        클라우드 솔루션 아키텍트(Cloud Solution Architect) 입니다. 
+        클라우드 솔루션 아키텍트(Cloud Solution Architect) 입니다.
     </p>
+</section>
+
+<section class="section">
+    <h2 class="section-title"><i class="fas fa-heart"></i> Support</h2>
+    <div style="display: flex; gap: 15px; flex-wrap: wrap; align-items: center;">
+        <a href="https://www.buymeacoffee.com/euriion" target="_blank">
+            <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" height="40">
+        </a>
+        <a href="https://ko-fi.com/G2G31S3EJ6" target="_blank">
+            <img src="https://storage.ko-fi.com/cdn/kofi1.png?v=3" alt="Support me on Ko-fi" height="40">
+        </a>
+    </div>
 </section>
 
 <section class="section">
@@ -64,6 +76,50 @@ title: seonghak - Profile
 </section>
 
 <section class="section">
+    <h2 class="section-title red"><i class="fas fa-tv"></i> Slides</h2>
+    {% assign recent_slides = site.slides | sort: "date" | reverse | slice: 0, 3 %}
+    {% if recent_slides.size > 0 %}
+    <ul class="contact-list">
+        {% for slide in recent_slides %}
+        <li>
+            <i class="fas fa-play-circle" style="color: var(--google-red);"></i>
+            <a href="{{ slide.url | relative_url }}">{{ slide.title }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+    <div style="margin-top: 15px;">
+        <a href="{{ '/slides/' | relative_url }}" class="back-link">
+            전체 슬라이드 보기 <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+    {% else %}
+    <p class="about-text">아직 등록된 슬라이드가 없습니다.</p>
+    {% endif %}
+</section>
+
+<section class="section">
+    <h2 class="section-title"><i class="fas fa-pen-fancy"></i> Blog</h2>
+    {% assign recent_posts = site.posts | slice: 0, 3 %}
+    {% if recent_posts.size > 0 %}
+    <ul class="contact-list">
+        {% for post in recent_posts %}
+        <li>
+            <i class="fas fa-pencil-alt"></i>
+            <a href="{{ post.url | relative_url }}">{{ post.title }}</a>
+        </li>
+        {% endfor %}
+    </ul>
+    <div style="margin-top: 15px;">
+        <a href="{{ '/blog/' | relative_url }}" class="back-link">
+            전체 글 보기 <i class="fas fa-arrow-right"></i>
+        </a>
+    </div>
+    {% else %}
+    <p class="about-text">아직 작성된 글이 없습니다.</p>
+    {% endif %}
+</section>
+
+<section class="section">
     <h2 class="section-title green"><i class="fas fa-address-card"></i> Contact</h2>
     <ul class="contact-list">
         <li>
@@ -71,16 +127,4 @@ title: seonghak - Profile
             <a href="https://github.com/mz-seonghak" target="_blank">github.com/mz-seonghak</a>
         </li>
     </ul>
-</section>
-
-<section class="section">
-    <h2 class="section-title"><i class="fas fa-heart"></i> Support</h2>
-    <div style="display: flex; gap: 15px; flex-wrap: wrap; align-items: center;">
-        <a href="https://www.buymeacoffee.com/euriion" target="_blank">
-            <img src="https://cdn.buymeacoffee.com/buttons/v2/default-yellow.png" alt="Buy Me A Coffee" height="40">
-        </a>
-        <a href="https://ko-fi.com/G2G31S3EJ6" target="_blank">
-            <img src="https://storage.ko-fi.com/cdn/kofi1.png?v=3" alt="Support me on Ko-fi" height="40">
-        </a>
-    </div>
 </section>
