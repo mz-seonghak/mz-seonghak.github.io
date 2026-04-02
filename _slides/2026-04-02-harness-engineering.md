@@ -175,6 +175,112 @@ Claude, GPT, Gemini, 오픈소스 모델 성능은 수렴 중
 
 ---
 
+## SDK & 개발 킷: 코딩 에이전트 하네스
+
+하네스가 **이미 내장된** 에이전트 환경
+
+| 제품 | 제공사 | 핵심 하네스 기능 |
+|------|--------|-----------------|
+| **Claude Code** | Anthropic | 5계층 권한, 18+ 훅, CLAUDE.md, 자동 롤백 |
+| **Codex CLI** | OpenAI | 샌드박스, AGENTS.md, 파일 접근 제어 |
+| **Cursor** | Cursor Inc. | `.cursor/rules`, 루프 탐지, IDE 통합 |
+| **Windsurf** | Codeium | Cascade 에이전트, 멀티파일 편집 |
+
+---
+
+## Claude Code 하네스 아키텍처
+
+```
+Claude Code Harness
+├── Permission Model (5계층)
+│   ├── Mode (plan/autoEdit/fullAuto)
+│   ├── Allowlist · MCP · Bash rules
+│   └── User prompt (최종 승인)
+├── Hooks (18+ 이벤트)
+│   ├── PreToolUse / PostToolUse
+│   └── SessionStart/End, Stop...
+├── Context: CLAUDE.md + 자동 압축 + 3종 메모리
+├── Execution: 서브에이전트 + 워크트리 격리
+└── Safety: 자동 스냅샷 & 롤백
+```
+
+---
+
+## SDK & 개발 킷: 에이전트 개발 프레임워크
+
+### Claude Agent SDK (Anthropic)
+
+- **Tool-use-first** 접근 — 에이전트 = 모델 + 도구
+- 훅 시스템, 권한 모델, 에이전트를 도구로 호출
+- 의도적으로 단순한 설계
+
+### OpenAI Agents SDK
+
+- **Handoff** 메커니즘 — 에이전트 간 명시적 제어 전환
+- 입력/출력 가드레일, 낙관적 실행 + 롤백
+- 가장 낮은 학습 곡선
+
+---
+
+## SDK & 개발 킷: 에이전트 개발 프레임워크 (계속)
+
+### Google ADK (Agent Development Kit)
+
+- **SequentialAgent, ParallelAgent, LoopAgent** 등 명시적 워크플로우
+- 에이전트를 도구로 사용하는 계층 구조
+- Vertex AI 네이티브, Developer UI, 평가 도구 내장
+
+### AWS Strands Agents SDK
+
+- **모델 주도(model-driven)** — Model + Tools + Prompt
+- 내장 도구 20+, MCP 서버 연결, `@tool` 데코레이터
+- 복잡한 오케스트레이션 불필요, Bedrock 네이티브
+
+---
+
+## SDK & 개발 킷: 오케스트레이션 프레임워크
+
+| 프레임워크 | 핵심 특징 | 하네스 기능 |
+|-----------|----------|------------|
+| **LangGraph** | 그래프 기반 상태 관리 | 체크포인트 복구, HITL, LangSmith |
+| **CrewAI** | 역할 기반 멀티 에이전트 | Flows 이벤트 파이프라인 |
+| **MS AutoGen** | 대화 기반 멀티 에이전트 | 그룹 채팅, 코드 실행 샌드박스 |
+| **Bedrock Agents** | 완전 관리형 서비스 | 가드레일 내장, IAM, KB RAG |
+
+---
+
+## 도구 연결 표준: MCP
+
+**Model Context Protocol** — 모든 SDK를 관통하는 표준
+
+- 어떤 SDK든 **동일한 도구 인터페이스** 제공
+- Claude Code, Cursor, Codex 모두 지원
+- 한 번 만든 MCP 서버를 여러 에이전트에서 재사용
+
+```
+AI Agent ◄──MCP──► MCP Server
+                      │
+          ┌───────────┼───────────┐
+       파일시스템    데이터베이스    외부 API
+```
+
+---
+
+## SDK 선택 가이드
+
+| 시나리오 | 추천 | 이유 |
+|---------|------|------|
+| 즉시 코딩 에이전트 | **Claude Code** / **Codex** | 하네스 내장 |
+| 커스텀 에이전트 (Anthropic) | **Claude Agent SDK** | 단순 + 강력한 훅 |
+| 커스텀 에이전트 (OpenAI) | **OpenAI Agents SDK** | 최소 학습 곡선 |
+| GCP 생태계 | **Google ADK** | Vertex AI 네이티브 |
+| AWS 생태계 | **Strands Agents** | Bedrock 네이티브 |
+| 복잡한 멀티 에이전트 | **LangGraph** | 벤더 중립 그래프 |
+| 대화 기반 에이전트 팀 | **MS AutoGen** | 그룹 채팅 패턴 |
+| 관리형 서비스 | **Bedrock Agents** | 코드 최소 |
+
+---
+
 ## 실전 아키텍처 패턴
 
 ### 패턴 A: 단일 에이전트 + 감독자 루프
@@ -372,6 +478,8 @@ jobs:
 - [Effective Harnesses — Anthropic](https://www.anthropic.com/engineering/effective-harnesses-for-long-running-agents)
 - [What Is an Agent Harness? — Firecrawl](https://www.firecrawl.dev/blog/what-is-an-agent-harness)
 - [AI Harness Engineering Guide — Medium](https://medium.com/be-open/what-is-ai-harness-engineering-your-guide-to-controlling-autonomous-systems-30c9c8d2b489)
+- [AI Agent Frameworks Comparison — Roberto Infante](https://medium.com/@roberto.g.infante/the-state-of-ai-agent-frameworks-comparing-langgraph-openai-agent-sdk-google-adk-and-aws-d3e52a497720)
+- [Claude Agent SDK — Anthropic](https://platform.claude.com/docs/en/agent-sdk/overview)
 
 ---
 
