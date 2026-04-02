@@ -327,7 +327,9 @@
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/reveal.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/reveal.js/5.1.0/plugin/highlight/highlight.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js"></script>
     <script>
+        mermaid.initialize({startOnLoad:false, theme:'default'});
         Reveal.initialize({
             hash: true,
             slideNumber: true,
@@ -337,6 +339,8 @@
             height: 600,
             margin: 0.08,
             plugins: [ RevealHighlight ]
+        }).then(function(){
+            mermaid.run({nodes: document.querySelectorAll('.mermaid')});
         });
     </script>
 </body>

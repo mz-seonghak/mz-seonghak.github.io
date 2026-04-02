@@ -190,19 +190,16 @@ Claude, GPT, Gemini, 오픈소스 모델 성능은 수렴 중
 
 ## Claude Code 하네스 아키텍처
 
-```
-Claude Code Harness
-├── Permission Model (5계층)
-│   ├── Mode (plan/autoEdit/fullAuto)
-│   ├── Allowlist · MCP · Bash rules
-│   └── User prompt (최종 승인)
-├── Hooks (18+ 이벤트)
-│   ├── PreToolUse / PostToolUse
-│   └── SessionStart/End, Stop...
-├── Context: CLAUDE.md + 자동 압축 + 3종 메모리
-├── Execution: 서브에이전트 + 워크트리 격리
-└── Safety: 자동 스냅샷 & 롤백
-```
+<div class="mermaid">
+graph LR
+    CC["Claude Code<br/>Harness"] --> PM["Permission Model<br/>5계층"]
+    CC --> HK["Hooks<br/>18+ 이벤트"]
+    CC --> CTX["Context<br/>CLAUDE.md + 압축 + 메모리"]
+    CC --> EX["Execution<br/>서브에이전트 + 워크트리"]
+    CC --> SF["Safety<br/>스냅샷 & 롤백"]
+    PM --> PM1["Mode / Allowlist / MCP / Bash / User"]
+    HK --> HK1["PreToolUse / PostToolUse / Session"]
+</div>
 
 ---
 
@@ -257,12 +254,13 @@ Claude Code Harness
 - Claude Code, Cursor, Codex 모두 지원
 - 한 번 만든 MCP 서버를 여러 에이전트에서 재사용
 
-```
-AI Agent ◄──MCP──► MCP Server
-                      │
-          ┌───────────┼───────────┐
-       파일시스템    데이터베이스    외부 API
-```
+<div class="mermaid">
+graph TB
+    Agent["AI Agent<br/>(SDK 무관)"] <-->|"MCP 표준"| Server["MCP Server"]
+    Server --> FS["파일시스템"]
+    Server --> DB["데이터베이스"]
+    Server --> API["외부 API"]
+</div>
 
 ---
 
