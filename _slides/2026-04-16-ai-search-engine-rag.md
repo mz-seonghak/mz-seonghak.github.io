@@ -1,7 +1,7 @@
 ---
 title: "AI와 검색 엔진 — RAG를 위한 검색 기술 완전 가이드"
 date: 2026-04-16
-tags: [information-retrieval, sparse-search, dense-search, bm25, cosine-similarity, jaccard, tanimoto, korean-morphology, nori, mecab, hybrid-search, elasticsearch, opensearch, qdrant, weaviate, milvus, vertex-ai-search, rag, llm]
+tags: [information-retrieval, sparse-search, dense-search, bm25, cosine-similarity, jaccard, tanimoto, korean-morphology, nori, mecab, hybrid-search, re-ranking, cross-encoder, colbert, elasticsearch, opensearch, qdrant, weaviate, milvus, vertex-ai-search, rag, llm]
 description: "IR의 역사부터 Jaccard·Tanimoto·Cosine 유사도, BM25, Hybrid Search, 오픈소스 검색 엔진, Google Vertex AI Search까지 — AI LLM RAG를 위한 검색 기술 완전 가이드."
 theme: white
 ---
@@ -9,8 +9,6 @@ theme: white
 # AI와 검색 엔진
 
 Sparse · Dense · Hybrid — RAG를 위한 검색 기술 완전 가이드
-
-[seonghak.com/slides/2026-04-16-ai-search-engine-rag/](https://seonghak.com/slides/2026-04-16-ai-search-engine-rag/)
 
 ---
 
@@ -22,10 +20,11 @@ Sparse · Dense · Hybrid — RAG를 위한 검색 기술 완전 가이드
 4. **유사도 알고리즘** — Cosine, Jaccard, Tanimoto 등
 5. **Dense Search** & Vector Search
 6. **Hybrid Search** 전략 & RRF
-7. **오픈소스 하이브리드 검색 엔진**
-8. **Google Hybrid Search** 기술
-9. AI LLM **RAG**를 위한 검색엔진 활용
-10. 정리 & Q&A
+7. **Re-ranking** — Bi-encoder, Cross-encoder, LLM
+8. **오픈소스 하이브리드 검색 엔진**
+9. **Google Hybrid Search** 기술
+10. AI LLM **RAG**를 위한 검색엔진 활용
+11. 정리 & Q&A
 
 ---
 
@@ -605,6 +604,140 @@ cos(A, B) = (0×0 + 0.3×0.3 + ...) / (||A|| × ||B||) = 0.12
 | D | 5 | 10 | 1/65 + 1/70 = **0.030** |
 
 > 점수 스케일이 달라도 **순위 기반**으로 공정하게 결합
+
+---
+
+## Re-ranking (리랭킹)이란?
+
+1차 검색(Retrieval) 결과를 **더 정교한 모델로 다시 정렬**하는 2단계 전략
+
+### 왜 필요한가?
+
+```
+[1단계] Retrieval (BM25 / Dense / Hybrid)
+  → 수백만 문서에서 Top-K 후보 빠르게 추출 (속도 우선)
+
+[2단계] Re-ranking
+  → Top-K 후보만 정밀 분석하여 최종 순위 결정 (정확도 우선)
+```
+
+| 단계 | 모델 | 문서 수 | 속도 | 정확도 |
+|------|------|--------|------|--------|
+| **1단계 Retrieval** | BM25, Bi-encoder | 수백만 → Top-100 | ✓ 빠름 | △ |
+| **2단계 Re-ranking** | Cross-encoder, LLM | Top-100 → Top-10 | △ 느림 | ✓✓✓ |
+
+> 전체 문서를 정밀 분석하면 너무 느림 → **2단계 파이프라인**이 현실적 해법
+
+---
+
+## Bi-encoder vs Cross-encoder
+
+리랭킹을 이해하려면 **두 가지 인코더 구조**의 차이를 알아야 한다
+
+### Bi-encoder (1단계: Retrieval용)
+
+```
+쿼리  → [Encoder] → 쿼리 벡터  ─┐
+                                 ├→ Cosine Similarity
+문서  → [Encoder] → 문서 벡터  ─┘
+
+✓ 쿼리와 문서를 독립적으로 인코딩
+✓ 문서 벡터를 미리 계산(오프라인) 가능 → 빠름
+✗ 쿼리-문서 간 상호작용 없음 → 정확도 한계
+```
+
+### Cross-encoder (2단계: Re-ranking용)
+
+```
+[쿼리 + 문서] → [Encoder] → 관련성 점수 (0~1)
+
+✓ 쿼리와 문서를 함께 인코딩 → 상호작용 포착
+✓ 훨씬 높은 정확도
+✗ 매번 쌍(pair)으로 계산 → 느림 (사전 계산 불가)
+```
+
+> Bi-encoder = **속도**, Cross-encoder = **정확도**
+
+---
+
+## 리랭킹 방식 비교
+
+| 방식 | 원리 | 정확도 | 속도 | 비용 |
+|------|------|--------|------|------|
+| **Cross-encoder** | 쿼리+문서 쌍을 BERT 계열로 점수화 | ✓✓ | △ | 중 |
+| **ColBERT** | 토큰 레벨 late interaction | ✓✓ | ✓ | 중 |
+| **LLM Re-ranker** | GPT/Gemini에 후보 문서를 주고 순위 판단 | ✓✓✓ | ✗ 느림 | 높음 |
+| **Cohere Rerank** | API 기반 Cross-encoder 서비스 | ✓✓ | ✓ | 중 |
+| **Vertex AI Ranking API** | Google 자체 LLM 리랭커 | ✓✓✓ | ✓ | 중 |
+
+### 선택 기준
+
+| 상황 | 추천 |
+|------|------|
+| 비용 최소화 + 정확도 필요 | **Cross-encoder** (오픈소스) |
+| 대규모 + 빠른 응답 | **ColBERT** |
+| 최고 정확도, 비용 여유 | **LLM Re-ranker** |
+| 관리형 서비스 원하면 | **Cohere Rerank / Vertex AI Ranking API** |
+
+---
+
+## LLM Re-ranking 예시
+
+LLM에게 검색 결과를 주고 **관련성 순으로 재정렬** 요청
+
+```python
+prompt = """
+다음은 사용자 질문과 검색된 문서 목록입니다.
+각 문서의 관련성을 판단하여 가장 관련 높은 순서로
+문서 번호를 나열해주세요.
+
+질문: "쿠버네티스 Pod이 OOMKilled 되는 원인"
+
+[1] 쿠버네티스 메모리 리소스 제한 설정 가이드...
+[2] Docker 컨테이너 네트워크 설정 방법...
+[3] Pod OOMKilled 트러블슈팅: memory limit 초과 시...
+[4] 쿠버네티스 클러스터 오토스케일링 전략...
+[5] Linux cgroup 메모리 제어와 OOM Killer 동작 원리...
+
+관련성 순서:
+"""
+
+# 결과: [3] > [5] > [1] > [4] > [2]
+```
+
+> LLM이 **문맥을 이해**하므로 키워드 매칭을 넘어선 정밀 랭킹 가능
+
+---
+
+## 검색 파이프라인 전체 흐름
+
+```
+사용자 쿼리
+    │
+    ▼
+┌──────────────────────────────┐
+│ 1단계: Retrieval (빠르게)      │
+│   Sparse(BM25) + Dense(ANN)  │
+│   → Hybrid Fusion (RRF)      │
+│   → Top-100 후보 추출          │
+└──────────────────────────────┘
+    │
+    ▼
+┌──────────────────────────────┐
+│ 2단계: Re-ranking (정밀하게)   │
+│   Cross-encoder / LLM        │
+│   → Top-100 → Top-10 재정렬   │
+└──────────────────────────────┘
+    │
+    ▼
+┌──────────────────────────────┐
+│ 3단계: Generation (RAG)       │
+│   LLM이 Top-K 문서 기반 답변   │
+│   + Citation / Grounding      │
+└──────────────────────────────┘
+```
+
+> **Retrieval → Re-ranking → Generation** = 현대 RAG의 표준 3단계
 
 ---
 
