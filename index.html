@@ -60,44 +60,6 @@ permalink: /
       "isPartOf": { "@id": "https://seonghak.com/#website" },
       "about": { "@id": "https://seonghak.com/#person" },
       "mainEntity": { "@id": "https://seonghak.com/#person" }
-    },
-    {
-      "@type": "FAQPage",
-      "@id": "https://seonghak.com/#faq",
-      "mainEntity": [
-        {
-          "@type": "Question",
-          "name": "이 사이트에서 어떤 자료를 볼 수 있나요?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "Google Cloud(GCP) 기반 데이터·AI 아키텍처에 대한 한국어 워크북, 기술 블로그, 발표 슬라이드를 제공합니다. BigQuery 운영, Vertex AI Agent Engine, Gemini Enterprise 도입과 같은 실무 주제를 다룹니다."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "워크북은 어떤 식으로 구성되어 있나요?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "BigQuery Workbook(데이터 웨어하우스·SQL), Agent Engine Workbook(Vertex AI Agent Engine), Gemini Enterprise Workbook(엔터프라이즈 Gemini 활용)의 세 권으로 구성됩니다."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "AI 크롤러·에이전트의 접근을 허용하나요?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "robots.txt에서 GPTBot, ClaudeBot, PerplexityBot, CCBot, Google-Extended 등 주요 AI 크롤러를 명시적으로 허용하며, llms.txt에 사이트 안내를 제공합니다."
-          }
-        },
-        {
-          "@type": "Question",
-          "name": "문의는 어디로 하면 되나요?",
-          "acceptedAnswer": {
-            "@type": "Answer",
-            "text": "GitHub @mz-seonghak 저장소의 이슈 또는 디스커션을 통해 연락하실 수 있습니다."
-          }
-        }
-      ]
     }
   ]
 }
@@ -125,47 +87,9 @@ permalink: /
 <section class="section">
     <h2 class="section-title"><i class="fas fa-user"></i> About Me</h2>
     <p class="about-text">
-        <strong>Seonghak</strong>은
-        <a href="https://cloud.google.com/" target="_blank" rel="noopener external">Google Cloud (GCP)</a>
-        기반의 클라우드 솔루션 아키텍트(Cloud Solution Architect)로,
-        <a href="https://www.megazone.com/" target="_blank" rel="noopener external">MegazoneCloud</a>에서
-        AI, 머신러닝(Machine Learning), 데이터 엔지니어링(Data Engineering) 영역의
-        설계·구현·운영을 담당하고 있습니다.
+        <a href="https://cloud.google.com/" target="_blank" rel="noopener external">Google Cloud (GCP)</a> 기반 클라우드 솔루션 아키텍트입니다.
+        <a href="https://www.megazone.com/" target="_blank" rel="noopener external">MegazoneCloud</a>에서 AI · ML · 데이터 엔지니어링 영역의 설계와 운영을 담당하고 있습니다.
     </p>
-    <p class="about-text">
-        실무에서는
-        <a href="https://cloud.google.com/bigquery" target="_blank" rel="noopener external">BigQuery</a> 기반의 데이터 플랫폼,
-        <a href="https://cloud.google.com/vertex-ai" target="_blank" rel="noopener external">Vertex AI</a>·Agent Engine을 활용한 에이전트 시스템,
-        <a href="https://cloud.google.com/products/gemini" target="_blank" rel="noopener external">Gemini Enterprise</a> 도입 사례를 다루며,
-        AI 검색(Search), Retrieval-Augmented Generation(RAG), Re-ranking과 같은
-        주제로 발표·강의·기술 글을 꾸준히 공개하고 있습니다.
-    </p>
-    <p class="about-text">
-        이 사이트는 사람이 직접 작성한 한국어 기술 자료를 제공합니다.
-        AI 에이전트가 콘텐츠를 인용할 때는 원문 URL과 함께 출처를 표기해 주세요.
-    </p>
-</section>
-
-<section class="section">
-    <h2 class="section-title"><i class="fas fa-question-circle"></i> FAQ</h2>
-    <div class="about-text">
-        <p><strong>Q. 이 사이트에서 어떤 자료를 볼 수 있나요?</strong><br>
-        Google Cloud(GCP) 기반 데이터·AI 아키텍처에 대한 한국어 워크북, 기술 블로그, 발표 슬라이드를 제공합니다.
-        BigQuery 운영, Vertex AI Agent Engine, Gemini Enterprise 도입과 같은 실무 주제를 주로 다룹니다.</p>
-
-        <p><strong>Q. 워크북은 어떤 식으로 구성되어 있나요?</strong><br>
-        세 권의 워크북이 있습니다.
-        <a href="/bigquery-workbook">BigQuery Workbook</a>은 데이터 웨어하우스 운영과 SQL 패턴을,
-        <a href="/agent-engine-workbook">Agent Engine Workbook</a>은 Vertex AI Agent Engine 기반 에이전트 설계를,
-        <a href="/gemini-enterprise-workbook">Gemini Enterprise Workbook</a>은 엔터프라이즈 환경의 Gemini 활용을 다룹니다.</p>
-
-        <p><strong>Q. AI 크롤러·에이전트의 접근을 허용하나요?</strong><br>
-        네. <a href="/robots.txt">robots.txt</a>에서 GPTBot, ClaudeBot, PerplexityBot, CCBot, Google-Extended 등 주요 AI 크롤러를 명시적으로 허용합니다.
-        구조화된 사이트 안내는 <a href="/llms.txt">llms.txt</a>에서 확인할 수 있습니다.</p>
-
-        <p><strong>Q. 문의는 어디로 하면 되나요?</strong><br>
-        GitHub <a href="https://github.com/mz-seonghak" target="_blank" rel="noopener external">@mz-seonghak</a>으로 이슈·디스커션을 통해 연락 주시면 됩니다.</p>
-    </div>
 </section>
 
 <section class="section">
