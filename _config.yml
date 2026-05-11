@@ -1,14 +1,32 @@
 # Site settings
-title: seonghak
-description: "Cloud Solution Architect - AI, ML, Data Engineering"
+title: "Seonghak — Cloud Solution Architect"
+tagline: "AI · ML · Data Engineering 전문 GCP 클라우드 솔루션 아키텍트"
+description: "Seonghak은 Google Cloud(GCP) 기반의 AI, 머신러닝, 데이터 엔지니어링을 다루는 클라우드 솔루션 아키텍트입니다. BigQuery, Agent Engine, Gemini Enterprise 등 실전 워크북과 기술 블로그를 제공합니다."
 url: "https://seonghak.com"
 baseurl: ""
+lang: ko
+author:
+  name: Seonghak
+  url: https://seonghak.com
+  email: seonghak@mz.co.kr
+
+# Social / SEO
+social:
+  name: Seonghak
+  links:
+    - https://github.com/mz-seonghak
 
 # Build settings
 markdown: kramdown
 highlighter: rouge
 future: true
 timezone: Asia/Seoul
+
+# Plugins (GitHub Pages safelist)
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-feed
 
 # Permalink
 permalink: /blog/:year/:month/:day/:title/
