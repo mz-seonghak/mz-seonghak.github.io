@@ -1,6 +1,6 @@
 ---
 layout: post
-title: "구글 클라우드로 NL2SQL(Text2SQL) 에이전트 사용하기 — 4가지 방법과 선택 기준"
+title: "구글 클라우드(Google Cloud)로 NL2SQL(Text2SQL) 에이전트 사용하기 — 4가지 방법과 선택 기준"
 date: 2026-05-02
 tags: [nl2sql, text2sql, bigquery, conversational-analytics, gemini-enterprise, agent-platform, adk, google-cloud, data-agent]
 ---
