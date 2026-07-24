@@ -601,3 +601,20 @@ footer {
         gap: 15px;
     }
 }
+
+/* ==========================================================================
+   List item date (home page slide/blog lists)
+   ========================================================================== */
+.item-date {
+    margin-left: auto;
+    color: var(--text-secondary);
+    font-size: 0.85rem;
+    white-space: nowrap;
+    flex-shrink: 0;
+}
+
+@media (max-width: 600px) {
+    .item-date {
+        font-size: 0.75rem;
+    }
+}
