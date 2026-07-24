@@ -1,7 +1,7 @@
 ---
 layout: post
 title: "소버린과 소버린티, 그리고 Google Cloud — 국가핵심기술과 금융권 요건을 만족하는 AI·데이터 설계"
-date: 2026-07-24
+date: 2026-04-24
 tags: [sovereign-cloud, sovereignty, google-cloud, vertex-ai, gemini, data-residency, regional-endpoint, financial-compliance, national-core-technology]
 ---
 
